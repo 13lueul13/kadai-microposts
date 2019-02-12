@@ -1,0 +1,13 @@
+<% unless current_user == micropost.user %>
+  <% if current_user.faving?(micropost) %>
+    <%= form_for(current_user.likes.find_by(micropost_id: micropost.id), html: { method: :delete }) do |f| %>
+      <%= hidden_field_tag :micropost_id, micropost.id %>
+      <%= f.submit 'Unfav', class: 'btn btn-warning btn-xs' %>
+    <% end %>
+  <% else %>
+    <%= form_for(current_user.likes.build) do |f| %>
+      <%= hidden_field_tag :micropost_id, micropost.id %>
+      <%= f.submit 'Fav', class: 'btn btn-info btn-xs' %>
+    <% end %>   
+  <% end %>
+<% end %>
